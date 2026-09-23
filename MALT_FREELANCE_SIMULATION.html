@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedro Belentani — Malt Freelance Profile Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f5f5f5;color:#1a1a2e;line-height:1.6}
+a{text-decoration:none;color:#6c5ce7}
+a:hover{text-decoration:underline}
+
+/* MALT HEADER */
+.malt-header{background:#fff;border-bottom:1px solid #e8e8e8;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.malt-logo{font-size:24px;font-weight:800;color:#6c5ce7;letter-spacing:-0.5px}
+.malt-logo span{color:#1a1a2e}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-right a{color:#1a1a2e;font-size:14px;font-weight:500}
+.nav-right a:hover{color:#6c5ce7;text-decoration:none}
+.nav-btn{background:#6c5ce7;color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+.nav-btn:hover{background:#5a4bd1}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:1fr 320px;gap:32px}
+
+/* PROFILE HEADER */
+.profile-header{background:#fff;border-radius:16px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.profile-top{display:flex;gap:24px;align-items:flex-start}
+.profile-avatar{width:120px;height:120px;border-radius:16px;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff;font-weight:700;flex-shrink:0}
+.profile-info h1{font-size:28px;font-weight:700;color:#1a1a2e}
+.profile-info .tagline{font-size:16px;color:#6c5ce7;font-weight:600;margin-top:4px}
+.profile-info .location{font-size:14px;color:#666;margin-top:8px}
+.profile-info .location i{margin-right:4px}
+.profile-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tag{background:#f0edff;color:#6c5ce7;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.tag.green{background:#e8f8f5;color:#00b894}
+.tag.orange{background:#ffeaa7;color:#e17055}
+
+.profile-actions{display:flex;gap:12px;margin-top:20px}
+.btn-malt{background:#6c5ce7;color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn-malt:hover{background:#5a4bd1;transform:translateY(-1px)}
+.btn-malt-outline{background:transparent;color:#6c5ce7;border:2px solid #6c5ce7;padding:10px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
+.btn-malt-outline:hover{background:#f0edff}
+
+/* STATS */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;padding-top:24px;border-top:1px solid #f0f0f0}
+.stat{text-align:center}
+.stat .num{font-size:24px;font-weight:700;color:#1a1a2e}
+.stat .label{font-size:12px;color:#666;margin-top:2px}
+
+/* SECTIONS */
+.section{background:#fff;border-radius:16px;padding:28px;margin-top:24px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.section h2{font-size:20px;font-weight:700;color:#1a1a2e;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section h2 i{color:#6c5ce7}
+
+/* SERVICES */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.service-card{border:2px solid #f0f0f0;border-radius:12px;padding:20px;transition:all 0.2s;cursor:pointer}
+.service-card:hover{border-color:#6c5ce7;transform:translateY(-2px);box-shadow:0 4px 12px rgba(108,92,231,0.15)}
+.service-card .icon{width:48px;height:48px;background:#f0edff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#6c5ce7;margin-bottom:12px}
+.service-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.service-card p{font-size:13px;color:#666;line-height:1.5}
+
+/* EXPERIENCE */
+.exp-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid #f0f0f0}
+.exp-item:last-child{border-bottom:none}
+.exp-icon{width:56px;height:56px;background:#f0edff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6c5ce7;flex-shrink:0}
+.exp-content h3{font-size:16px;font-weight:600}
+.exp-content .company{font-size:14px;color:#6c5ce7;font-weight:500}
+.exp-content .period{font-size:13px;color:#999;margin-top:2px}
+.exp-content .desc{font-size:14px;color:#555;margin-top:8px;line-height:1.6}
+.exp-content ul{margin-top:8px;padding-left:18px}
+.exp-content li{font-size:13px;color:#555;margin-bottom:4px}
+
+/* PROJECTS */
+.project-card{border:2px solid #f0f0f0;border-radius:12px;padding:20px;margin-bottom:16px;transition:all 0.2s}
+.project-card:hover{border-color:#6c5ce7}
+.project-card h3{font-size:16px;font-weight:600;color:#1a1a2e}
+.project-card .project-type{font-size:12px;color:#6c5ce7;font-weight:600;margin-top:4px}
+.project-card p{font-size:14px;color:#555;margin-top:8px;line-height:1.6}
+.project-tech{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.tech-tag{background:#f5f5f5;color:#555;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500}
+
+/* REVIEWS */
+.review-item{padding:20px 0;border-bottom:1px solid #f0f0f0}
+.review-item:last-child{border-bottom:none}
+.review-header{display:flex;justify-content:space-between;align-items:flex-start}
+.review-author{font-size:14px;font-weight:600}
+.review-stars{color:#f39c12;font-size:14px}
+.review-text{font-size:14px;color:#555;margin-top:8px;line-height:1.6;font-style:italic}
+.review-meta{font-size:12px;color:#999;margin-top:8px}
+
+/* PRICING */
+.pricing-card{background:linear-gradient(135deg,#6c5ce7,#a29bfe);border-radius:16px;padding:28px;color:#fff;text-align:center}
+.pricing-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.pricing-card .price{font-size:42px;font-weight:800}
+.pricing-card .price small{font-size:16px;font-weight:400;opacity:0.8}
+.pricing-card .note{font-size:13px;opacity:0.8;margin-top:8px}
+.pricing-card .btn-white{background:#fff;color:#6c5ce7;border:none;padding:12px 32px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px}
+.pricing-card .btn-white:hover{background:#f0edff}
+
+/* TOOLS */
+.tools-list{display:flex;gap:8px;flex-wrap:wrap}
+.tool-item{background:#f5f5f5;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;color:#333}
+
+/* LANGUAGES */
+.lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lang-item{text-align:center;padding:12px;background:#f9f9f9;border-radius:10px}
+.lang-item .flag{font-size:24px;margin-bottom:4px}
+.lang-item .name{font-size:13px;font-weight:600}
+.lang-item .level{font-size:11px;color:#666}
+
+/* FOOTER */
+.footer{background:#1a1a2e;color:#fff;padding:40px 24px;margin-top:40px}
+.footer-content{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.footer h4{font-size:14px;font-weight:700;margin-bottom:12px;color:#a29bfe}
+.footer a{color:#ccc;font-size:13px;display:block;margin-bottom:6px}
+.footer a:hover{color:#fff}
+.footer-bottom{max-width:1000px;margin:24px auto 0;padding-top:24px;border-top:1px solid #333;font-size:12px;color:#666;text-align:center}
+
+@media(max-width:768px){
+  .main{grid-template-columns:1fr}
+  .profile-top{flex-direction:column;align-items:center;text-align:center}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .service-grid{grid-template-columns:1fr}
+  .lang-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-content{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- MALT HEADER -->
+<header class="malt-header">
+  <div class="malt-logo">malt<span>.</span></div>
+  <div class="nav-right">
+    <a href="#">Cómo funciona</a>
+    <a href="#">Encontrar freelance</a>
+    <a href="#">Empresas</a>
+    <a href="#">Blog</a>
+    <button class="nav-btn">Publicar proyecto</button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="content">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-top">
+        <div class="profile-avatar">PB</div>
+        <div class="profile-info">
+          <h1>Pedro Belentani</h1>
+          <div class="tagline">AI Solutions Consultant · Voice AI · Full-Stack Developer</div>
+          <div class="location"><i class="fas fa-map-marker-alt"></i> Barcelona, España</div>
+          <div class="profile-tags">
+            <span class="tag">AI Safety</span>
+            <span class="tag">Voice AI</span>
+            <span class="tag green">Disponible</span>
+            <span class="tag orange">Responde en 1h</span>
+          </div>
+          <div class="profile-actions">
+            <button class="btn-malt"><i class="fas fa-paper-plane"></i> Contactar</button>
+            <button class="btn-malt-outline"><i class="fas fa-bookmark"></i> Guardar</button>
+          </div>
+        </div>
+      </div>
+      <div class="stats-bar">
+        <div class="stat"><div class="num">36+</div><div class="label">Proyectos completados</div></div>
+        <div class="stat"><div class="num">5</div><div class="label">Idiomas</div></div>
+        <div class="stat"><div class="num">7</div><div class="label">Años en T&S (Meta)</div></div>
+        <div class="stat"><div class="num">1h</div><div class="label">Tiempo de respuesta</div></div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="section">
+      <h2><i class="fas fa-cogs"></i> Servicios que ofrezco</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-phone-alt"></i></div>
+          <h3>Voice AI Development</h3>
+          <p>Bots de voz para WhatsApp, Instagram DM y llamadas telefonicas en 5 idiomas. Pipeline completo: STT + LLM + TTS. Costo operativo ~$0/mes.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-robot"></i></div>
+          <h3>AI Integration & Automation</h3>
+          <p>Integracion de LLMs en sistemas de produccion. Multi-provider routing, agentes IA, automatizacion de procesos de negocio.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-code"></i></div>
+          <h3>Full-Stack Development</h3>
+          <p>Python (FastAPI, Flask), TypeScript (React, Next.js), PostgreSQL, Redis, Docker. De la idea al deploy.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Trust & Safety Consulting</h3>
+          <p>7 anos en Meta. Content moderation, policy design, threat analysis, frameworks de clasificacion de amenazas.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-globe"></i></div>
+          <h3>Web Development</h3>
+          <p>Landing pages, e-commerce, portfolios, experiencias interactivas con Three.js, GSAP, WebGL.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon"><i class="fas fa-lock"></i></div>
+          <h3>Security Auditing</h3>
+          <p>Auditoria de sistemas, endurecimiento de seguridad, deteccion de amenazas, scripts de automatizacion.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="section">
+      <h2><i class="fas fa-user"></i> Sobre mi</h2>
+      <p style="font-size:15px;color:#444;line-height:1.7">
+        Consultor de soluciones IA con 7 anos de experiencia operativa en Trust & Safety para las plataformas globales de Meta (Facebook/Instagram) a traves de TELUS Digital, procesando 50,000+ decisiones de contenido de alto riesgo con 99.2% de precision.
+      </p>
+      <p style="font-size:15px;color:#444;line-height:1.7;margin-top:12px">
+        Construyo sistemas de IA completos: desde orquestacion multi-agente hasta plataformas de voz que atienden WhatsApp, Instagram DM y llamadas telefonicas en 5 idiomas (Espanol, Portugues, Catalan, Ingles, Frances).
+      </p>
+      <p style="font-size:15px;color:#444;line-height:1.7;margin-top:12px">
+        Actualmente completando un Master en AI for Creative Industries en LABASAD Barcelona. Filosofia de trabajo: "Centaur" — una persona aumentada por IA haciendo el trabajo de un equipo completo.
+      </p>
+      <p style="font-size:15px;color:#444;line-height:1.7;margin-top:12px;font-weight:600;color:#1a1a2e">
+        Que me diferencia:
+      </p>
+      <ul style="padding-left:20px;margin-top:8px">
+        <li style="font-size:14px;color:#555;margin-bottom:4px">7 anos reales en Safety para Meta (no solo teoria)</li>
+        <li style="font-size:14px;color:#555;margin-bottom:4px">Capacidad de construir sistemas completos de punta a punta</li>
+        <li style="font-size:14px;color:#555;margin-bottom:4px">5 idiomas con experiencia operativa en cada uno</li>
+        <li style="font-size:14px;color:#555;margin-bottom:4px">Filosofia Centaur: persona + IA = equipo completo</li>
+        <li style="font-size:14px;color:#555;margin-bottom:4px">Frameworks analiticos propios aplicables a AI Safety</li>
+      </ul>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+      <h2><i class="fas fa-briefcase"></i> Experiencia</h2>
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="exp-content">
+          <h3>Trust & Safety Specialist / Global Safety Analyst</h3>
+          <div class="company">TELUS Digital (Meta — Facebook/Instagram)</div>
+          <div class="period">Agosto 2018 — Junio 2025 · 7 anos</div>
+          <ul>
+            <li>Evaluacion de contenido de alto riesgo para 3B+ usuarios globales en 6 idiomas</li>
+            <li>Diseno de frameworkos de clasificacion de amenazas usando BTI</li>
+            <li>Dashboards KPI e informes ejecutivos para stakeholders de Producto y Legal</li>
+            <li>Workflows asistidos por IA con 99.2% de precision en politicas</li>
+            <li>Liderazgo tecnico en formacion de analistas y mentoria inclusiva</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-robot"></i></div>
+        <div class="exp-content">
+          <h3>AI Systems Architect / Creative Technologist</h3>
+          <div class="company">Belentani Corp (Independiente)</div>
+          <div class="period">2021 — Presente · 5 anos</div>
+          <ul>
+            <li>Sistemas multi-agente con 4 agentes especializados y memoria compartida</li>
+            <li>VoiceBot SaaS: WhatsApp + Instagram + telefono, 5 idiomas, FastAPI + Next.js</li>
+            <li>EmpresaAI: plataforma empresarial con 20 modulos integrados</li>
+            <li>Cassandra Complex: plataforma de salud mental con 7 agentes IA</li>
+            <li>7 frameworks analiticos propios (BTI, ACH, DARVO, etc.)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-headset"></i></div>
+        <div class="exp-content">
+          <h3>Customer Experience & Incident Manager</h3>
+          <div class="company">Concentrix / Grupo Inditex</div>
+          <div class="period">Diciembre 2016 — Agosto 2018 · 1 ano 9 meses</div>
+          <ul>
+            <li>Gestion de incidentes criticos para Massimo Dutti, Stradivarius y Uterque</li>
+            <li>SOPs que mejoraron resolucion en primer contacto en +20%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="section">
+      <h2><i class="fas fa-folder-open"></i> Proyectos destacados</h2>
+
+      <div class="project-card">
+        <h3>VoiceBot SaaS — Plataforma de Voz Multi-Canal</h3>
+        <div class="project-type">Voice AI · SaaS · Multi-idioma</div>
+        <p>Plataforma completa de bots de voz para WhatsApp, Instagram DM y llamadas telefonicas en 5 idiomas. Pipeline: OpenAI Whisper (STT) + Groq Llama 3.3 70B (LLM) + Edge-TTS (neural voices). Arquitectura multi-tenant con facturacion via Stripe. Costo operativo: ~$0/cliente/mes. Latencia: <3 segundos. Desplegable via Docker Compose en 10 minutos.</p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span><span class="tech-tag">FastAPI</span><span class="tech-tag">Next.js</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span><span class="tech-tag">Docker</span><span class="tech-tag">Whisper</span><span class="tech-tag">Groq</span><span class="tech-tag">Edge-TTS</span><span class="tech-tag">Twilio</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Multi-Agent Alliance Protocol</h3>
+        <div class="project-type">AI · Orquestacion · Multi-agente</div>
+        <p>Sistema de 4 agentes IA especializados con memoria compartida. BELA (orquestador), Hermes (estratega), Aider (ejecutor), Vigilante (QA). Operacion de coste cero via free tiers. Factor de mejora: 6.7x tiempo, 8.4x espacio, 4x deteccion de problemas.</p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span><span class="tech-tag">AutoGen</span><span class="tech-tag">Groq API</span><span class="tech-tag">Ollama</span><span class="tech-tag">Multi-agent</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Cassandra Complex — Salud Mental con IA</h3>
+        <div class="project-type">Salud Mental · IA · Poblacion vulnerable</div>
+        <p>Plataforma con 7 agentes IA especializados para poblaciones vulnerables (LGBTQ+, neurodivergente). 2,000+ preguntas clinicas, 12 categorias, crisis 24h integrada.</p>
+        <div class="project-tech">
+          <span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Three.js</span><span class="tech-tag">IA local</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>EmpresaAI — Plataforma Empresarial Autonoma</h3>
+        <div class="project-type">SaaS · Business Automation · 20 modulos</div>
+        <p>Plataforma completa con CRM, facturacion, contratos, generacion de leads, WhatsApp bot, dashboard KPI. Reduccion estimada de carga manual en 60%.</p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span><span class="tech-tag">Ollama</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span><span class="tech-tag">WhatsApp API</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Enterprise Security Audit</h3>
+        <div class="project-type">Seguridad · Auditoria · PowerShell</div>
+        <p>Auditoria completa de Windows 11: 5 amenazas mitigadas, 47GB recuperados, 8 scripts PowerShell creados. Tiempo: 3 horas (vs 20+ horas manual).</p>
+        <div class="project-tech">
+          <span class="tech-tag">PowerShell</span><span class="tech-tag">Windows Defender</span><span class="tech-tag">Cloudflare DoH</span><span class="tech-tag">Multi-agent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="section">
+      <h2><i class="fas fa-wrench"></i> Herramientas y tecnologias</h2>
+      <div class="tools-list">
+        <span class="tool-item">Python</span>
+        <span class="tool-item">TypeScript</span>
+        <span class="tool-item">React</span>
+        <span class="tool-item">Next.js</span>
+        <span class="tool-item">FastAPI</span>
+        <span class="tool-item">Flask</span>
+        <span class="tool-item">PyTorch</span>
+        <span class="tool-item">LangChain</span>
+        <span class="tool-item">OpenAI Whisper</span>
+        <span class="tool-item">Edge-TTS</span>
+        <span class="tool-item">Groq</span>
+        <span class="tool-item">Ollama</span>
+        <span class="tool-item">Twilio</span>
+        <span class="tool-item">WhatsApp API</span>
+        <span class="tool-item">PostgreSQL</span>
+        <span class="tool-item">Redis</span>
+        <span class="tool-item">Docker</span>
+        <span class="tool-item">Three.js</span>
+        <span class="tool-item">GSAP</span>
+        <span class="tool-item">WebGL</span>
+        <span class="tool-item">PowerShell</span>
+        <span class="tool-item">Git</span>
+        <span class="tool-item">GitHub Actions</span>
+        <span class="tool-item">Stripe</span>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="section">
+      <h2><i class="fas fa-star"></i> Valoraciones</h2>
+      <div class="review-item">
+        <div class="review-header">
+          <div>
+            <div class="review-author">Tech Startup (Voice AI Project)</div>
+            <div style="font-size:12px;color:#999">Proyecto: VoiceBot SaaS · Marzo 2025</div>
+          </div>
+          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        </div>
+        <div class="review-text">"Pedro construyo un sistema de voz completo en 2 semanas. WhatsApp, Instagram, llamadas — todo funcionando en 5 idiomas. El costo operativo es practicamente cero. Profesional, rapido, y con una comprension profunda de AI Safety."</div>
+      </div>
+      <div class="review-item">
+        <div class="review-header">
+          <div>
+            <div class="review-author">Digital Agency (Web Development)</div>
+            <div style="font-size:12px;color:#999">Proyecto: Landing Page Interactiva · Enero 2025</div>
+          </div>
+          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+        </div>
+        <div class="review-text">"Experiencia web inmersiva con Three.js y GSAP. El resultado supero nuestras expectativas. Pedro entiende tanto el lado tecnico como el creativo."</div>
+      </div>
+      <div class="review-item">
+        <div class="review-header">
+          <div>
+            <div class="review-author">NGO (Mental Health Platform)</div>
+            <div style="font-size:12px;color:#999">Proyecto: Cassandra Complex · Noviembre 2024</div>
+          </div>
+          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        </div>
+        <div class="review-text">"Construyo una plataforma de salud mental con 7 agentes IA para nuestra comunidad vulnerable. Sensibilidad, tecnicismo, y compromiso real con la causa. Raro de encontrar."</div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="section">
+      <h2><i class="fas fa-euro-sign"></i> Tarifas</h2>
+      <div class="pricing-card">
+        <h3>Tarifa diaria</h3>
+        <div class="price">100 <small>EUR/dia</small></div>
+        <div class="note">Disponible para proyectos, retainer, y roles fractionales CTO</div>
+        <button class="btn-white"><i class="fas fa-paper-plane"></i> Contactar ahora</button>
+      </div>
+    </div>
+
+    <!-- LANGUAGES -->
+    <div class="section">
+      <h2><i class="fas fa-language"></i> Idiomas</h2>
+      <div class="lang-grid">
+        <div class="lang-item"><div class="flag">🇪🇸</div><div class="name">Espanol</div><div class="level">Nativo</div></div>
+        <div class="lang-item"><div class="flag">🇧🇷</div><div class="name">Portugues</div><div class="level">Nativo</div></div>
+        <div class="lang-item"><div class="flag">🏴</div><div class="name">Catalan</div><div class="level">Nativo</div></div>
+        <div class="lang-item"><div class="flag">🇬🇧</div><div class="name">Ingles</div><div class="level">C1 Avanzado</div></div>
+        <div class="lang-item"><div class="flag">🇫🇷</div><div class="name">Frances</div><div class="level">Intermedio</div></div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+      <h2><i class="fas fa-graduation-cap"></i> Formacion</h2>
+      <div class="exp-item" style="border:none;padding:0">
+        <div class="exp-icon"><i class="fas fa-brain"></i></div>
+        <div class="exp-content">
+          <h3>Master in AI for Creative Industries</h3>
+          <div class="company">LABASAD (Barcelona Academy of Art & Design)</div>
+          <div class="period">2025 - 2026 · En curso</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- QUICK CONTACT -->
+    <div class="section" style="margin-top:0">
+      <h2 style="font-size:16px"><i class="fas fa-paper-plane"></i> Contacto rapido</h2>
+      <div style="margin-top:12px">
+        <p style="font-size:13px;color:#666;margin-bottom:8px">Email:</p>
+        <p style="font-size:14px;font-weight:600;color:#6c5ce7">belentani7pedro@gmail.com</p>
+      </div>
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:#666;margin-bottom:8px">Telefono:</p>
+        <p style="font-size:14px;font-weight:600">+34 631 816 810</p>
+      </div>
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:#666;margin-bottom:8px">LinkedIn:</p>
+        <p style="font-size:14px"><a href="https://www.linkedin.com/in/pedro-b-09473598">linkedin.com/in/pedro-b-09473598</a></p>
+      </div>
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:#666;margin-bottom:8px">GitHub:</p>
+        <p style="font-size:14px"><a href="https://github.com/belentani7pedro">github.com/belentani7pedro</a></p>
+      </div>
+      <button class="btn-malt" style="width:100%;margin-top:20px"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="section">
+      <h2 style="font-size:16px"><i class="fas fa-calendar-check"></i> Disponibilidad</h2>
+      <div style="margin-top:12px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:10px;height:10px;background:#00b894;border-radius:50%"></div>
+          <span style="font-size:14px;font-weight:600;color:#00b894">Disponible ahora</span>
+        </div>
+        <p style="font-size:13px;color:#666">Tiempo de respuesta: ~1 hora</p>
+        <p style="font-size:13px;color:#666;margin-top:4px">Modalidad: Remoto / Hibrido / Presencial (Barcelona)</p>
+        <p style="font-size:13px;color:#666;margin-top:4px">Tipo: Proyectos, retainer, consultoria</p>
+      </div>
+    </div>
+
+    <!-- SIMILAR FREELANCERS -->
+    <div class="section">
+      <h2 style="font-size:16px"><i class="fas fa-users"></i> Freelances similares</h2>
+      <div style="margin-top:12px">
+        <div style="display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0">
+          <div style="width:32px;height:32px;background:#e8f0fe;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#0a66c2;font-weight:600">ML</div>
+          <div><div style="font-size:13px;font-weight:600">Maria Lopez</div><div style="font-size:11px;color:#999">AI Developer · 90 EUR/dia</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0">
+          <div style="width:32px;height:32px;background:#e8f8f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#00b894;font-weight:600">CR</div>
+          <div><div style="font-size:13px;font-weight:600">Carlos Ruiz</div><div style="font-size:11px;color:#999">Full-Stack Dev · 110 EUR/dia</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;padding:8px 0">
+          <div style="width:32px;height:32px;background:#ffeaa7;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#e17055;font-weight:600">AN</div>
+          <div><div style="font-size:13px;font-weight:600">Ana Navarro</div><div style="font-size:11px;color:#999">Voice AI · 95 EUR/dia</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div>
+      <h4>Malt</h4>
+      <a href="#">Como funciona</a>
+      <a href="#">Precios</a>
+      <a href="#">Talento</a>
+      <a href="#">Empresas</a>
+    </div>
+    <div>
+      <h4>Recursos</h4>
+      <a href="#">Blog</a>
+      <a href="#">Guia de freelance</a>
+      <a href="#">Calculadora de tarifas</a>
+      <a href="#">Contrato marco</a>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <a href="#">Terminos de uso</a>
+      <a href="#">Politica de privacidad</a>
+      <a href="#">Cookies</a>
+    </div>
+    <div>
+      <h4>Siguenos</h4>
+      <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Malt · Barcelona, España · Simulación de perfil freelance
+  </div>
+</footer>
+
+</body>
+</html>

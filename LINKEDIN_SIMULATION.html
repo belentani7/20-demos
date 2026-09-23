@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedro Belentani — LinkedIn Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',system-ui,sans-serif;background:#f3f2ef;color:#000000e6;line-height:1.5}
+a{text-decoration:none;color:#0a66c2}
+a:hover{text-decoration:underline;color:#004182}
+
+/* LINKEDIN HEADER */
+.linkedin-header{background:#fff;border-bottom:1px solid #e0e0e0;padding:0;position:sticky;top:0;z-index:100}
+.linkedin-nav{max-width:1128px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:52px}
+.linkedin-logo{font-size:28px;color:#0a66c2;font-weight:700}
+.linkedin-logo i{margin-right:4px}
+.nav-links{display:flex;gap:8px}
+.nav-links a{display:flex;flex-direction:column;align-items:center;padding:4px 12px;color:#666;font-size:12px;border-radius:4px}
+.nav-links a:hover{background:#f3f2ef;text-decoration:none;color:#000}
+.nav-links a.active{color:#000}
+.nav-links i{font-size:20px;margin-bottom:2px}
+
+/* MAIN LAYOUT */
+.main{max-width:1128px;margin:0 auto;padding:24px 16px;display:grid;grid-template-columns:1fr 300px;gap:24px}
+
+/* PROFILE CARD */
+.profile-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;overflow:hidden}
+.profile-banner{height:200px;background:linear-gradient(135deg,#1B365D 0%,#2A7F72 50%,#C9A84C 100%);position:relative}
+.profile-avatar{width:152px;height:152px;border-radius:50%;border:4px solid #fff;background:#1B365D;display:flex;align-items:center;justify-content:center;position:absolute;bottom:-76px;left:24px;font-size:56px;color:#C9A84C;font-weight:700;font-family:'Manrope',sans-serif}
+.profile-info{padding:88px 24px 24px}
+.profile-name{font-size:24px;font-weight:600;color:#000000e6}
+.profile-headline{font-size:14px;color:#00000099;margin-top:4px}
+.profile-location{font-size:14px;color:#00000099;margin-top:4px}
+.profile-connections{font-size:14px;color:#0a66c2;font-weight:600;margin-top:8px;cursor:pointer}
+.profile-connections:hover{text-decoration:underline}
+.profile-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.btn-primary{background:#0a66c2;color:#fff;border:none;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:600;cursor:pointer}
+.btn-primary:hover{background:#004182}
+.btn-secondary{background:transparent;color:#0a66c2;border:1px solid #0a66c2;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:600;cursor:pointer}
+.btn-secondary:hover{background:#e8f0fe;border-color:#004182}
+.btn-ghost{background:transparent;color:#666;border:1px solid #666;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:600;cursor:pointer}
+
+/* ABOUT */
+.about-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.about-card h2{font-size:20px;font-weight:600;margin-bottom:12px}
+.about-card p{font-size:14px;color:#00000099;line-height:1.6}
+
+/* EXPERIENCE */
+.experience-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.experience-card h2{font-size:20px;font-weight:600;margin-bottom:16px}
+.exp-item{display:flex;gap:12px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid #f0f0f0}
+.exp-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.exp-icon{width:48px;height:48px;background:#f3f2ef;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#666;flex-shrink:0}
+.exp-content h3{font-size:14px;font-weight:600}
+.exp-content .company{font-size:14px;color:#00000099}
+.exp-content .period{font-size:12px;color:#00000099;margin-top:2px}
+.exp-content .location{font-size:12px;color:#00000099}
+.exp-content .description{font-size:14px;color:#00000099;margin-top:8px;line-height:1.6}
+.exp-content ul{margin-top:8px;padding-left:20px}
+.exp-content li{font-size:14px;color:#00000099;margin-bottom:4px;line-height:1.5}
+
+/* SKILLS */
+.skills-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.skills-card h2{font-size:20px;font-weight:600;margin-bottom:16px}
+.skill-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.skill-item:last-child{border-bottom:none}
+.skill-name{font-size:14px;font-weight:600}
+.skill-endorsements{font-size:12px;color:#00000099}
+.skill-bar{width:120px;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+.skill-bar-fill{height:100%;background:#0a66c2;border-radius:3px}
+
+/* PROJECTS */
+.projects-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.projects-card h2{font-size:20px;font-weight:600;margin-bottom:16px}
+.project-item{padding:16px 0;border-bottom:1px solid #f0f0f0}
+.project-item:last-child{border-bottom:none}
+.project-item h3{font-size:14px;font-weight:600;color:#0a66c2;cursor:pointer}
+.project-item h3:hover{text-decoration:underline}
+.project-item .project-desc{font-size:14px;color:#00000099;margin-top:8px;line-height:1.6}
+.project-item .project-tech{font-size:12px;color:#00000099;margin-top:8px}
+.project-item .project-tech span{background:#e8f0fe;color:#0a66c2;padding:2px 8px;border-radius:12px;margin-right:4px;font-weight:500}
+
+/* EDUCATION */
+.education-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.education-card h2{font-size:20px;font-weight:600;margin-bottom:16px}
+.edu-item{display:flex;gap:12px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid #f0f0f0}
+.edu-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.edu-icon{width:48px;height:48px;background:#f3f2ef;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#666;flex-shrink:0}
+.edu-content h3{font-size:14px;font-weight:600}
+.edu-content .school{font-size:14px;color:#00000099}
+.edu-content .period{font-size:12px;color:#00000099;margin-top:2px}
+
+/* LANGUAGES */
+.languages-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:24px;margin-top:8px}
+.languages-card h2{font-size:20px;font-weight:600;margin-bottom:16px}
+.lang-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+.lang-name{font-size:14px;font-weight:500}
+.lang-level{font-size:13px;color:#00000099}
+
+/* SIDEBAR */
+.sidebar .about-card,.sidebar .people-card{margin-top:0}
+.people-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:16px}
+.people-card h3{font-size:16px;font-weight:600;margin-bottom:12px}
+.person-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.person-item:last-child{border-bottom:none}
+.person-avatar{width:40px;height:40px;border-radius:50%;background:#e8f0fe;display:flex;align-items:center;justify-content:center;font-size:14px;color:#0a66c2;font-weight:600;flex-shrink:0}
+.person-info .name{font-size:14px;font-weight:600}
+.person-info .title{font-size:12px;color:#00000099}
+
+/* ACTIVITY */
+.activity-card{background:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:16px;margin-top:8px}
+.activity-card h3{font-size:16px;font-weight:600;margin-bottom:12px}
+.post-item{padding:12px 0;border-bottom:1px solid #f0f0f0}
+.post-item:last-child{border-bottom:none}
+.post-item .post-text{font-size:14px;color:#00000099;margin-bottom:8px;line-height:1.5}
+.post-item .post-meta{font-size:12px;color:#00000099}
+.post-item .post-actions{display:flex;gap:16px;margin-top:8px}
+.post-item .post-actions span{font-size:12px;color:#666;cursor:pointer}
+.post-item .post-actions span:hover{color:#0a66c2}
+
+@media(max-width:768px){
+  .main{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .profile-avatar{width:100px;height:100px;bottom:-50px;font-size:36px}
+  .profile-info{padding-top:60px}
+}
+</style>
+</head>
+<body>
+
+<!-- LINKEDIN HEADER -->
+<header class="linkedin-header">
+  <nav class="linkedin-nav">
+    <div class="linkedin-logo"><i class="fab fa-linkedin"></i></div>
+    <div class="nav-links">
+      <a href="#" class="active"><i class="fas fa-home"></i>Home</a>
+      <a href="#"><i class="fas fa-user-friends"></i>Network</a>
+      <a href="#"><i class="fas fa-briefcase"></i>Jobs</a>
+      <a href="#"><i class="fas fa-comment-dots"></i>Messaging</a>
+      <a href="#"><i class="fas fa-bell"></i>Notifications</a>
+    </div>
+  </nav>
+</header>
+
+<div class="main">
+  <div class="content">
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="profile-banner"></div>
+      <div class="profile-avatar">PB</div>
+      <div class="profile-info">
+        <h1 class="profile-name">Pedro Marcos Santos Belentani</h1>
+        <p class="profile-headline">AI Safety Engineer | 7yr Meta T&S | Built Voice AI SaaS (5 langs) | Master AI @ LABASAD</p>
+        <p class="profile-location">Barcelona, Cataluña, España · <a href="#">500+ contactos</a></p>
+        <p class="profile-connections">1.000+ contactos</p>
+        <div class="profile-actions">
+          <button class="btn-primary"><i class="fas fa-plus"></i> Connect</button>
+          <button class="btn-secondary"><i class="fas fa-comment"></i> Message</button>
+          <button class="btn-ghost"><i class="fas fa-ellipsis-h"></i> More</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="about-card">
+      <h2>About</h2>
+      <p>
+        I build AI systems that protect people. For 7 years at TELUS Digital (Meta), I evaluated high-risk content across Facebook and Instagram for 3B+ global users, processing 50,000+ decisions with 99.2% policy accuracy. I designed threat classification frameworks and led technical training for distributed teams across 6 languages.
+      </p>
+      <p style="margin-top:12px">
+        Today I engineer AI-powered voice systems that handle WhatsApp, Instagram DMs, and phone calls in 5 languages (Spanish, Portuguese, Catalan, English, French). I build multi-agent orchestration protocols. I create tools that make AI safer and more accessible.
+      </p>
+      <p style="margin-top:12px">
+        Currently completing a Master in AI for Creative Industries @ LABASAD Barcelona.
+      </p>
+      <p style="margin-top:12px;font-weight:600;color:#000000e6">
+        What I bring:
+      </p>
+      <p>
+        • Trust & Safety operations at global scale (Meta)<br>
+        • Full-stack development: Python, TypeScript, React, Next.js<br>
+        • AI/ML: PyTorch, LangChain, Whisper, multi-LLM routing (12+ providers)<br>
+        • Voice AI: STT + LLM + TTS pipeline, 5 languages, WhatsApp/Instagram/Twilio<br>
+        • 5 languages: Spanish, Portuguese, Catalan, English, French
+      </p>
+      <p style="margin-top:12px">
+        Open to: AI Safety Engineer roles, Trust & Safety leadership, Voice AI consulting.
+      </p>
+      <p style="margin-top:8px">
+        <strong>Let's connect:</strong> belentani7pedro@gmail.com
+      </p>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="experience-card">
+      <h2>Experience</h2>
+
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="exp-content">
+          <h3>Trust & Safety Specialist / Global Safety Analyst</h3>
+          <p class="company">TELUS Digital · Full-time</p>
+          <p class="period">Aug 2018 - Jun 2025 · 7 yrs</p>
+          <p class="location">Barcelona, Catalonia, Spain · Remote</p>
+          <ul>
+            <li>Evaluated high-risk content across Facebook and Instagram for 3B+ global users, making critical safety decisions under time pressure across 6 languages</li>
+            <li>Designed threat classification frameworks using Behavioral Threat Indicators (BTI) to identify coordinated malicious behavior patterns at global scale</li>
+            <li>Built KPI dashboards and executive reporting systems for Product and Legal stakeholders, translating safety metrics into actionable business intelligence</li>
+            <li>Pioneered AI-assisted moderation workflows with mandatory human review checkpoints, achieving 99.2% policy compliance while reducing processing latency by 40%</li>
+            <li>Led technical training for new analysts on data security protocols, content policy application, and escalation procedures</li>
+            <li>Provided inclusive mentoring for neurodivergent cognitive styles, improving team retention and performance metrics</li>
+            <li>Managed crisis escalations with logistics and supply chain teams across European markets</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-robot"></i></div>
+        <div class="exp-content">
+          <h3>AI Systems Architect & Creative Technologist</h3>
+          <p class="company">Belentani Corp · Self-employed</p>
+          <p class="period">2021 - Present · 5 yrs</p>
+          <p class="location">Barcelona, Spain</p>
+          <ul>
+            <li>Designed and deployed multi-agent AI orchestration systems with 4 specialized agents featuring shared memory checkpoints and zero-cost operation via free-tier API optimization</li>
+            <li>Built VoiceBot SaaS platform: WhatsApp + Instagram DM + phone calls, 5 languages, FastAPI + Next.js + PostgreSQL + Stripe + Whisper + Edge-TTS + Groq LLM + Twilio</li>
+            <li>Developed EmpresaAI autonomous business platform with 20 integrated modules (CRM, invoicing, contracts, lead generation, WhatsApp bot, KPI dashboard)</li>
+            <li>Created Cassandra Complex mental health platform with 7 specialized AI agents, 2,000+ clinical questions, for vulnerable populations (LGBTQ+, neurodivergent communities)</li>
+            <li>Architected NOIA Core v3 production backend API with HMAC authentication, rate limiting, circuit breaker patterns, Redis caching, Celery async processing</li>
+            <li>Developed 7 proprietary analytical frameworks for AI safety: BTI, ACH, DARVO Detection, Anti-Sycophancy Design, PET/PLS/PHR Protocol, Cassandra Complex Analysis, Hypervigilance Framework</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-icon"><i class="fas fa-headset"></i></div>
+        <div class="exp-content">
+          <h3>Customer Experience & Incident Manager</h3>
+          <p class="company">Concentrix / Grupo Inditex · Full-time</p>
+          <p class="period">Dec 2016 - Aug 2018 · 1 yr 9 mos</p>
+          <p class="location">Barcelona, Spain</p>
+          <ul>
+            <li>Managed critical customer experience operations for Massimo Dutti, Stradivarius, and Uterque across European markets</li>
+            <li>Designed Standard Operating Procedures (SOPs) that improved first-contact resolution by +20%, becoming the operational benchmark</li>
+            <li>Coordinated cross-functional escalations with logistics, supply chain, and returns teams across multiple European countries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="projects-card">
+      <h2>Featured Projects</h2>
+
+      <div class="project-item">
+        <h3>VoiceBot SaaS — Multi-Channel Voice AI Platform</h3>
+        <p class="project-desc">
+          Built a production-ready voice AI platform that handles WhatsApp voice notes, Instagram DMs, and phone calls in 5 languages. The system uses OpenAI Whisper for speech-to-text, Groq Llama 3.3 70B for intelligent responses, and Edge-TTS (Microsoft Neural voices) for natural-sounding speech synthesis. Multi-tenant architecture with Stripe subscription billing. Operational cost: ~$0/client/month. Response latency: <3 seconds end-to-end. Deployable via Docker Compose in under 10 minutes.
+        </p>
+        <div class="project-tech">
+          <span>Python</span><span>FastAPI</span><span>Next.js</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>Whisper</span><span>Groq</span><span>Edge-TTS</span><span>Twilio</span><span>WhatsApp API</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>Multi-Agent Alliance Protocol — AI Orchestration</h3>
+        <p class="project-desc">
+          Designed a 4-agent orchestration system with role-specialized agents: BELA (MiMo V2.5 Pro) as orchestrator, Hermes (Groq Llama 3.3 70B) as strategist, Aider (Groq Llama 3.3 70B) as executor, and Vigilante (Ollama qwen2.5-coder:7b) as QA/auditor. Shared memory checkpoints every 30 minutes via state files enable continuity across sessions. Cascade execution workflow. Cost optimization: 3 of 4 agents run on free tiers. The system completed a 47-project system audit in 3 hours that would have taken 20+ hours manually. Factor de mejora: 6.7x time, 8.4x space, 4x problem detection.
+        </p>
+        <div class="project-tech">
+          <span>Python</span><span>AutoGen</span><span>Groq API</span><span>Ollama</span><span>Multi-agent</span><span>Shared State</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>Cassandra Complex — Mental Health AI Platform</h3>
+        <p class="project-desc">
+          Built a mental health platform with 7 specialized AI agents (Validator, Strategist, Socratic, Somatic, Legal, Creative, Narrative) designed for vulnerable populations: LGBTQ+ communities, neurodivergent individuals, and trauma survivors. Features contextual chat responses, 24/7 crisis integration, 2,000+ clinical questions across 12 assessment categories, 15 interactive rooms, and an expandable terminology database. Tech stack: HTML5, CSS3, JavaScript, Canvas 2D, Three.js, local AI inference.
+        </p>
+        <div class="project-tech">
+          <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Three.js</span><span>Canvas 2D</span><span>Local AI</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>EmpresaAI — Autonomous Business Platform (20 Modules)</h3>
+        <p class="project-desc">
+          Complete business automation platform with 20 integrated modules: CRM, invoicing, contract generation, lead prospecting, WhatsApp bot, KPI dashboard, email campaigns, competitor analysis, ROI calculation, meeting preparation, and more. Built with Python/Ollama/Flask/SQLite. Auto-monitored agent with health checks and auto-restart. Reduces manual workload by estimated 60%.
+        </p>
+        <div class="project-tech">
+          <span>Python</span><span>Ollama</span><span>Flask</span><span>SQLite</span><span>WhatsApp API</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>NOIA Core v3 — Production Backend API</h3>
+        <p class="project-desc">
+          Production backend API for B2B prospecting with HMAC authentication, rate limiting (100 requests/15 min), circuit breaker pattern, Redis caching, Celery async processing. SQL injection prevention via ORM, CORS configuration, CSP headers, bcrypt password hashing, JWT tokens, input validation via express-validator, XSS sanitization. 26 automated security tests covering injection, authentication, rate limiting, data exposure, and business logic.
+        </p>
+        <div class="project-tech">
+          <span>Python</span><span>FastAPI</span><span>Redis</span><span>Celery</span><span>Docker</span><span>SQLAlchemy</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>Enterprise Security Audit & Hardening</h3>
+        <p class="project-desc">
+          Conducted full enterprise security audit on a compromised Windows 11 system. Detected and mitigated 5 active threats (Trojan MpTamperSrvDisableAV, 10 malicious Chrome extensions). Removed unauthorized Opera browser. Recovered 47GB disk space (40MB → 42.31GB). Restored Windows Update and BITS services. Hardened DNS (Cloudflare DoH), disabled LLMNR/NetBIOS, maximized UAC. Created 8 reusable PowerShell scripts for security automation. Dual-agent coordination for parallel verification. Total time: 3 hours (vs estimated 20+ hours manually).
+        </p>
+        <div class="project-tech">
+          <span>PowerShell</span><span>Windows Defender</span><span>Cloudflare DoH</span><span>Security Hardening</span><span>Multi-agent</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>BELENTANI REBUILD — Immersive Web Experience</h3>
+        <p class="project-desc">
+          1:1 faithful recreation of belentani.es from source — 947 lines, 95KB single-file HTML. WebGL Engine: IcosahedronGeometry(9,5) + GLSL Perlin noise + 4,200 particles + UnrealBloomPass. Features: Boot sequence, Magic Gate (5 3D signatures), Matrix rain, AI chat (Pollinations), Terminal, Beat Forge (Tone.js 96 BPM). 12 sections: Hero, Artist, Music, Judas, Gallery, AI Lab, Studio, Challenges, Contact. 200 technical references compiled across GSAP, Three.js, WebGL, CSS, JS.
+        </p>
+        <div class="project-tech">
+          <span>Vanilla JS</span><span>GSAP</span><span>Three.js</span><span>Tone.js</span><span>GLSL Shaders</span><span>Lenis</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>Instagram Voice Bot — AI Response to Voice Notes</h3>
+        <p class="project-desc">
+          Bot that automatically downloads and processes Instagram voice notes. Pipeline: Voice note → Format conversion (M4A→WAV) → Whisper STT with auto language detection → Groq Llama 3.3 70B intelligent response → Edge-TTS voice synthesis → Instagram voice reply. Supports 5 languages (PT-BR, PT-PT, ES, CA, EN) with per-language system prompts. Per-user conversation history. Zero operational cost (all free-tier APIs).
+        </p>
+        <div class="project-tech">
+          <span>Python</span><span>instagrapi</span><span>Whisper</span><span>Groq</span><span>Edge-TTS</span><span>pydub</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>Duck — Music Production Web Platform</h3>
+        <p class="project-desc">
+          Interactive music studio web platform with HTML5/CSS3/JS + GSAP + Three.js + Web Audio API. Features: Green Slime effect (falling paint with splash physics), 3D rotating logo (CSS preserve-3d), 4 languages (PT/ES/EN/FR) with 200+ i18n keys, 12 singles with covers, 15 studio tools, interactive Piano (8 octaves, keyboard mapping), Drum Machine (16 steps), Voice Synth + Recorder with effects. ~1,200 lines, 112KB, <2s load time. Deployed: belentani7.github.io/heyduck/
+        </p>
+        <div class="project-tech">
+          <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GSAP</span><span>Three.js</span><span>Web Audio API</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="skills-card">
+      <h2>Skills</h2>
+
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Python (FastAPI, Flask, LangChain, PyTorch)</div>
+          <div class="skill-endorsements">Advanced · 5+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">TypeScript / JavaScript (React, Next.js, Node.js)</div>
+          <div class="skill-endorsements">Advanced · 4+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Trust & Safety / Content Moderation</div>
+          <div class="skill-endorsements">Expert · 7+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:98%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">AI/ML (PyTorch, Transformers, LangChain, Ollama)</div>
+          <div class="skill-endorsements">Advanced · 3+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Voice AI (Whisper, Edge-TTS, Twilio, WhatsApp API)</div>
+          <div class="skill-endorsements">Advanced · 2+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Threat Intelligence / Behavioral Analysis</div>
+          <div class="skill-endorsements">Expert · 7+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Three.js / WebGL / GSAP</div>
+          <div class="skill-endorsements">Intermediate-Advanced · 2+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Docker / GitHub Actions / DevOps</div>
+          <div class="skill-endorsements">Intermediate · 2+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Prompt Engineering / LLM Evaluation</div>
+          <div class="skill-endorsements">Advanced · 2+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div>
+          <div class="skill-name">Multi-Agent AI Systems</div>
+          <div class="skill-endorsements">Advanced · 2+ years</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="education-card">
+      <h2>Education</h2>
+      <div class="edu-item">
+        <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="edu-content">
+          <h3>Master in AI for Creative Industries</h3>
+          <p class="school">LABASAD (Barcelona Academy of Art & Design)</p>
+          <p class="period">Sep 2025 - Oct 2026 · In Progress</p>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon"><i class="fas fa-certificate"></i></div>
+        <div class="edu-content">
+          <h3>First Certificate in English (C1)</h3>
+          <p class="school">Master Language</p>
+          <p class="period">2015 - 2016</p>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon"><i class="fas fa-book"></i></div>
+        <div class="edu-content">
+          <h3>FP Grado Medio — Actividades Comerciales</h3>
+          <p class="school">Centre d'Estudis Sant Francesc</p>
+          <p class="period">2013 - 2014</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANGUAGES -->
+    <div class="languages-card">
+      <h2>Languages</h2>
+      <div class="lang-item"><span class="lang-name">Spanish</span><span class="lang-level">Native</span></div>
+      <div class="lang-item"><span class="lang-name">Portuguese</span><span class="lang-level">Native</span></div>
+      <div class="lang-item"><span class="lang-name">Catalan</span><span class="lang-level">Native</span></div>
+      <div class="lang-item"><span class="lang-name">English</span><span class="lang-level">Professional Working</span></div>
+      <div class="lang-item"><span class="lang-name">French</span><span class="lang-level">Elementary</span></div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="activity-card">
+      <h3>Activity</h3>
+      <div class="post-item">
+        <div class="post-text">
+          Just built a voice AI that handles WhatsApp, Instagram DMs, and phone calls in 5 languages — for $0/month. The stack: OpenAI Whisper (STT) → Groq Llama 3.3 70B (LLM) → Edge-TTS (neural voices). All on free tiers. Response latency under 3 seconds.
+          <br><br>
+          The real insight: you don't need expensive AI APIs to build production-ready voice systems. You need the right architecture.
+          <br><br>
+          #AI #VoiceAI #WhatsApp #Engineering #TrustAndSafety
+        </div>
+        <div class="post-meta">2d · <i class="fas fa-globe"></i></div>
+        <div class="post-actions">
+          <span><i class="fas fa-thumbs-up"></i> 47</span>
+          <span><i class="fas fa-comment"></i> 12</span>
+          <span><i class="fas fa-retweet"></i> 8</span>
+          <span><i class="fas fa-paper-plane"></i> Send</span>
+        </div>
+      </div>
+      <div class="post-item">
+        <div class="post-text">
+          What 7 years of content moderation at Meta taught me about AI Safety:
+          <br><br>
+          1. The hardest decisions are never black and white<br>
+          2. AI needs human judgment at the edges<br>
+          3. Scalability ≠ quality — you need both<br>
+          4. Policy is code, code is policy<br>
+          5. The people building safety systems need to understand the harm they're preventing
+          <br><br>
+          50,000+ cases. 99.2% accuracy. 6 languages. This isn't theoretical — it's operational.
+          <br><br>
+          #AISafety #TrustAndSafety #ContentModeration #Meta
+        </div>
+        <div class="post-meta">5d · <i class="fas fa-globe"></i></div>
+        <div class="post-actions">
+          <span><i class="fas fa-thumbs-up"></i> 89</span>
+          <span><i class="fas fa-comment"></i> 23</span>
+          <span><i class="fas fa-retweet"></i> 15</span>
+          <span><i class="fas fa-paper-plane"></i> Send</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="people-card">
+      <h3>People also viewed</h3>
+      <div class="person-item">
+        <div class="person-avatar">MG</div>
+        <div class="person-info">
+          <div class="name">Maria Garcia</div>
+          <div class="title">AI Safety Lead at Anthropic</div>
+        </div>
+      </div>
+      <div class="person-item">
+        <div class="person-avatar">JR</div>
+        <div class="person-info">
+          <div class="name">James Rodriguez</div>
+          <div class="title">Trust & Safety Manager at Google</div>
+        </div>
+      </div>
+      <div class="person-item">
+        <div class="person-avatar">AL</div>
+        <div class="person-info">
+          <div class="name">Ana Lopez</div>
+          <div class="title">Content Policy Analyst at Meta</div>
+        </div>
+      </div>
+      <div class="person-item">
+        <div class="person-avatar">CK</div>
+        <div class="person-info">
+          <div class="name">Carlos Kim</div>
+          <div class="title">Senior AI Engineer at OpenAI</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="people-card" style="margin-top:8px">
+      <h3>People you may know</h3>
+      <div class="person-item">
+        <div class="person-avatar">LS</div>
+        <div class="person-info">
+          <div class="name">Laura Sanchez</div>
+          <div class="title">Voice AI Developer at Twilio</div>
+        </div>
+      </div>
+      <div class="person-item">
+        <div class="person-avatar">DP</div>
+        <div class="person-info">
+          <div class="name">David Park</div>
+          <div class="title">ML Safety Researcher at DeepMind</div>
+        </div>
+      </div>
+      <div class="person-item">
+        <div class="person-avatar">SN</div>
+        <div class="person-info">
+          <div class="name">Sofia Nilsson</div>
+          <div class="title">Full-Stack Developer at Spotify</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" style="margin-top:8px">
+      <h3>Recommended for you</h3>
+      <div style="font-size:13px;color:#00000099;margin-top:8px">
+        <p style="margin-bottom:8px"><a href="#">AI Safety Engineer roles in Barcelona</a></p>
+        <p style="margin-bottom:8px"><a href="#">Trust & Safety certifications</a></p>
+        <p style="margin-bottom:8px"><a href="#">Voice AI development courses</a></p>
+        <p><a href="#">Remote AI jobs in Europe</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
